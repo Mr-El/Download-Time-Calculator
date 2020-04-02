@@ -29,9 +29,27 @@ namespace Download_Time_Calculator
 
         private void enterButton_Click(object sender, EventArgs e)
         {
-            int storageNum, downloadRateNum, resultTime;
+            double resultNum, downloadRateNum, storageNum;
 
-            //resultTime = storageNum / downloadRateNum;
+            double.TryParse(storageTxtBox.Text, out storageNum);
+            double.TryParse(downRateTxtBox.Text, out downloadRateNum);
+
+            resultNum = storageNum / downloadRateNum;
+
+            resultBox.Text = resultNum.ToString("c").Remove(0, 1);
+
+            if (storageCmbBox.SelectedIndex == 1 )
+            {
+                double.TryParse(storageTxtBox.Text + 100, out storageNum);
+            }
+        }
+
+        private void storageCmbBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (storageCmbBox.Text == "GB")
+            {
+
+            }    
         }
     }
 }
