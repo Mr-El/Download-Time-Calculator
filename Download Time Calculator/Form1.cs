@@ -34,14 +34,56 @@ namespace Download_Time_Calculator
             double.TryParse(storageTxtBox.Text, out storageNum);
             double.TryParse(downRateTxtBox.Text, out downloadRateNum);
 
+            int selectedIndex = storageCmbBox.SelectedIndex;
+            Object selectedItem = storageCmbBox.SelectedItem;
+
+            // MessageBox.Show("Selected Item Text: " + selectedItem.ToString() + "\n" +
+               // "Index: " + selectedIndex.ToString());
+
+            switch (storageCmbBox.SelectedItem.ToString().Trim())
+            {
+                case "KB":
+                    storageNum = storageNum * 1000;
+                    break;
+                case "MB":
+                    storageNum = storageNum * Math.Pow(1000, 2);
+                    break;
+                case "GB":
+                    storageNum = storageNum * Math.Pow(1000, 3);
+                    break;
+                case "TB":
+                    storageNum = storageNum * Math.Pow(1000, 4);
+                    break;
+                default:
+                    break;
+            }
+
+            switch (downRateCmboBox.SelectedItem.ToString().Trim())
+            {
+                case "KB/s":
+                    downloadRateNum = downloadRateNum * 1000;
+                    break;
+                case "MB/s":
+                    downloadRateNum = downloadRateNum * Math.Pow(1000, 2);
+                    break;
+                case "GB/s":
+                    downloadRateNum = downloadRateNum * Math.Pow(1000, 3);
+                    break;
+                case "TB/s":
+                    downloadRateNum = downloadRateNum * Math.Pow(1000, 4);
+                    break;
+                default:
+                    break;
+            }
+
             resultNum = storageNum / downloadRateNum;
 
-            resultBox.Text = resultNum.ToString("c").Remove(0, 1);
+            Double hoursEnd = Math.Floor(resultNum / 3600);
+            Double minutesEnd = Math.Floor((resultNum / 60) % 60);
+            Double secondsEnd = Math.Floor(resultNum % 60);
+            
 
-            if (storageCmbBox.SelectedIndex == 1 )
-            {
-                double.TryParse(storageTxtBox.Text + 100, out storageNum);
-            }
+            resultBox.Text = resultNum.ToString(hoursEnd + ":" + minutesEnd + ":" + secondsEnd);
         }
 
         private void storageCmbBox_SelectedIndexChanged(object sender, EventArgs e)
